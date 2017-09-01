@@ -116,25 +116,22 @@ bears = ["Yogi Bear"
 
 
 # # IPython Magic
-# If you are running yorr notebook with an python kernel, ther are some special built in funcitonality that you can access with "magic" functions. There are line magics that are preceded by a single `%` and affect only that line and cell magics preceded by `%%` that you place at the begining of a cell to modify the behavior of that cell. There are [lots of magics](http://ipython.readthedocs.io/en/stable/interactive/magics.htm), but here are some handy ones.
+# If you are running your notebook with an python kernel, there are some special built in funcitonality that you can access with "magic" functions. There are line magics that are preceded by a single `%` and affect only that line and cell magics preceded by `%%` that you place at the beginning of a cell to modify the behavior of that cell. There are [lots of magics](http://ipython.readthedocs.io/en/stable/interactive/magics.htm), but here are some handy ones.
 
 # ## Environtment variables: %env
-# If you need to modify the environemnt variables that apply to a running notebook and don't want to restart your notebook server, `%env` allows you to check and set them from within the notebook
+# If you need to modify the environment variables that apply to a running notebook and don't want to restart your notebook server, `%env` allows you to check and set them from within the notebook
 
 # In[3]:
-
 
 get_ipython().magic('env')
 
 
 # In[8]:
 
-
 get_ipython().magic('env FOO="Warming up"')
 
 
 # In[9]:
-
 
 get_ipython().magic('env FOO')
 
@@ -158,7 +155,7 @@ print("Not much going on here")
 
 
 # ### Writing files: %%writefile
-# With `%%writefile` you can write the contents of a cell to a file. Let's create a simple python script that sets a python variable equal to the value of the environtment variable we just created.
+# With `%%writefile` you can write the contents of a cell to a file. Let's create a simple python script that sets a python variable equal to the value of the environment variable we just created.
 
 # In[18]:
 
@@ -436,9 +433,8 @@ from subprocess import check_output
 if os.path.exists(os.path.expanduser('~/.jupyter/jupyter_notebook_config.py')):
     print("Good to go")
 else:
-    # not great to do because it's not going to work if you write this notebook out to a script
     get_ipython().system('jupyter notebook --generate-config')
-    # better to use subprocess
+    # could also use the subprocess library
     # check_output("jupyter notebook --generate-config")
 
 
