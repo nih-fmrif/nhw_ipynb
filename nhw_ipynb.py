@@ -1,62 +1,430 @@
 
 # coding: utf-8
 
-# ### Basics
-#   - running cells
-#   - help menu
-#   - displaying multiple variables https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/ number 2
-#   - suppressing output with ;
-#   - function help
-#   - executing shell commands with !
-#   - multicursor, alt-select
+# # Basics
 # 
-# ### Magics
-#   - %env
-#   - %run, %load, %%writefile
-#   - %store
-#   - %[language magics]
-#   - timing
-#   - profiling
-#   - debugging
+# We'll fly through this, but if you forget any of the basic notebook functionality, you can come back here to find it.
 # 
-# ### Widgets
 # 
-# ### Sharing notebooks
-#   - github, Jupyter config changes
-#   - binder
-#   
-# ### Javascript slickness
-#   - RISE
-#   - 
+# ## Notebook navigation
 # 
+# You'll notice that when you select a "cell" of the notebook, there is a colored bar on the left. If that bar is blue you are in command mode and you can use the command mode shortcuts to manipulate cells and move quickly through the notebook. If you press `enter` on a selected cell, you'll enter edit mode and a cursor will appear inside the cell. Once you've finished editing the cell, you can press `esc` to return to command mode.
+# 
+# ## Running Cells
+# 
+# `shit+enter`: run a cell and advance the active cell to the following cell  
+# `ctrl+enter`: run a cell and keep this cell as the active cell
+# 
+# ## Help Menu
+# 
+# The help menu has links to documentation for notebooks, markdown, extensions (if installed), and lots of frequently used modules. Most importantly though, you can see all of the keyboard shortcuts there.
+# 
+# ## Displaying variables
+# 
+# By default the notebook will display the value of variables or statements when they're alone on a line.
 
-# In[12]:
+# In[6]:
 
 
+foo = "Having fun"
+foo
 
 
+# The notebook will pretty print some types of outputs, such as pandas dataframes.
+
+# In[1]:
+
+
+import seaborn as sns
+iris = sns.load_dataset('iris')
+iris.head()
+
+
+# With a settings change, you can also make the notebook print out any variable or statement on it's own line.
 
 # In[8]:
 
 
-get_ipython().magic('pinfo %env')
+from IPython.core.interactiveshell import InteractiveShell
+InteractiveShell.ast_node_interactivity = "all"
 
 
 # In[11]:
 
 
-get_ipython().magic('colors linux')
+foo
+iris.head()
 
-print("foo")
+
+# ## Function help
+# 
+# It's easy to get function documentation when you're in the jupyter notebook. Pressing `shift+tab` when your cursor is inside the parentheses of of a function will bring up the call signature of the function, and you can expand this to get the full documetation.
+
+# In[14]:
+
+
+# Press shift+tab inside the parentheses to get print's call signature and docstring 
+print()
+
+
+# Prepending or appending a question mark on a library, method, or variable will also bring up it's docstring.
+
+# In[25]:
+
+
+get_ipython().magic('pinfo range')
+
+
+# In[28]:
+
+
+get_ipython().magic('pinfo iris.head')
+
+
+# ## Executing shell commands with !
+# If you need to run a shell command you can do so right from the notebook by prepending the line with an exclamation mark.
+
+# In[29]:
+
+
+get_ipython().system('pwd')
+
+
+# ## Multicursor and alt-select
+# You can drop a cursor at multiple points inside the same cell with `ctrl(cmd on mac)+click` or by clicking and dragging while holding alt.
+
+# In[1]:
+
+
+###Exercise###
+# Use multicursor to add Bear to each item in the following list
+# You'll see the plus sign in the corner throughout the rest 
+# of this notebook. You can expand it to see the solution
+bears = ["Yogi"
+        ,"Pooh"
+        ,"Fuzz"
+        ,"Tall"]
+
+
+# In[ ]:
+
+
+bears = ["Yogi Bear"
+        ,"Pooh Bear"
+        ,"Fuzz Bear"
+        ,"Tall Bear"]
+
+
+# # IPython Magic
+# If you are running yorr notebook with an python kernel, ther are some special built in funcitonality that you can access with "magic" functions. There are line magics that are preceded by a single `%` and affect only that line and cell magics preceded by `%%` that you place at the begining of a cell to modify the behavior of that cell. There are [lots of magics](http://ipython.readthedocs.io/en/stable/interactive/magics.htm), but here are some handy ones.
+
+# ## Environtment variables: %env
+# If you need to modify the environemnt variables that apply to a running notebook and don't want to restart your notebook server, `%env` allows you to check and set them from within the notebook
+
+# In[3]:
+
+
+get_ipython().magic('env')
+
+
+# In[8]:
+
+
+get_ipython().magic('env FOO="Warming up"')
+
+
+# In[9]:
+
+
+get_ipython().magic('env FOO')
+
+
+# ## Manipulating files with magic
+
+# ### Load a file: %load
+# With the `%load` magic you can load the contents of a file into a cell
+
+# In[ ]:
+
+
+get_ipython().magic('load boring.py')
+
+
+# In[ ]:
+
+
+# %load boring.py
+print("Not much going on here")
+
+
+# ### Writing files: %%writefile
+# With `%%writefile` you can write the contents of a cell to a file. Let's create a simple python script that sets a python variable equal to the value of the environtment variable we just created.
+
+# In[18]:
+
+
+get_ipython().run_cell_magic('writefile', './grab_foo.py', "import os\nbar = os.environ['FOO']")
+
+
+# ### Running files: %run
+# `%run` is a line magic that executes the file or ipython notebook passed to it.
+
+# In[19]:
+
+
+get_ipython().magic('run ./grab_foo.py')
+print(bar)
+
+
+# ## Debugging: %pdb, %debug
+# `%pdb` toggles automatic calling of [The Python Debugger (pdb)](https://docs.python.org/3.6/library/pdb.html#debugger-commands) so you can figure out what is breaking whenever an error is thrown.  
+# 
+# [`%debug`](http://ipython.readthedocs.io/en/stable/interactive/magics.html#magic-debug) lets you drop into pdb after an error has been thrown even if automatic calling was off. You can also activate the debugger before executing code which allows you to set break points.
+
+# In[ ]:
+
+
+def is_moving(alive, location="south"):
+    """determine if a creature is moving"""
+    
+    if (not alive) and (location=="north"):
+        moving = True
+    elif not alive:
+        moving = 1/0
+    else:
+        moving = True
+    return moving
+        
+
+
+# In[31]:
+
+
+get_ipython().magic('pdb')
+is_moving(False)
+
+
+# In[33]:
+
+
+get_ipython().magic('debug')
+
+
+# ## Why's my code so slow: timing and profiling
+# `%%time` gives you the execution time of a single run of a cell.
+# 
+# 
+# `%%timeit` runs a statment 100,000 times and gives you the total execution time, it repeats this 3 times and returns the quickest result, this gives you an idea of the best case for execution of this code on your machine. The mean isn't used because slower execution times are often the result of other processes interfering with python.
+# 
+# `%prun` runs the statement you give it and returns the number of times each internal function was called within the statement.
+# 
+# 
+
+# In[98]:
+
+
+def slow_reverse(x):
+    y = []
+    for xi in x:
+        y.insert(0,xi)
+    return y
+def something_slow(n):
+    b = []
+    for i in range(0,n):
+        b.append(i)
+        b = slow_reverse(b)
+        
+def fast_reverse(x):
+    return x[::-1]
+def something_fast(n):
+    b = []
+    for i in range(0,n):
+        b.append(i)
+        b = fast_reverse(b)
+
+
+# In[99]:
+
+
+get_ipython().run_cell_magic('timeit', '', 'something_slow(100)')
+
+
+# In[100]:
+
+
+get_ipython().run_cell_magic('timeit', '', 'something_fast(100)')
+
+
+# In[101]:
+
+
+pres = get_ipython().magic('prun -r something_slow(100)')
+pres.print_stats()
+
+
+# In[102]:
+
+
+pres = get_ipython().magic('prun -r something_fast(100)')
+pres.print_stats()
+
+
+# ## Pretty pictures: %matplotlib inline
+# 
+# One of the really nice parts of notebooks is that you have markdown, code, and figures all in one document. the `%matplotlib inline` magic turns on plotting in the notebook.
+
+# In[29]:
+
+
+from matplotlib import pyplot as plt
+import numpy as np
+import pandas as pd
+get_ipython().magic('matplotlib inline')
+
+
+# In[28]:
+
+
+for s in pd.unique(iris.species):
+    x = iris.loc[iris.species == s,"sepal_length"]
+    y = iris.loc[iris.species == s,"sepal_width"]
+    plt.plot(x,y,'o', label =s)
+    plt.legend(loc='best')
+
+
+# ## Bonus: Speaking of plotting, seaborn makes things easier and prettier
+# You can see the [seaborn documentation](https://seaborn.pydata.org/index.html) for more examples of pretty plots made easy
+
+# In[32]:
+
+
+import seaborn as sns
+sns.set()
+sns.pairplot(iris,hue="species")
+
+
+# # Widgets
+# 
+# [Ipython widgets](http://ipywidgets.readthedocs.io/en/stable/index.html) are python objects represented in the browser than you can use to create interactive GUIs. This can be particularly useful for exploring your data. We'll use the `interact` function to create some interactive widgets.
+# 
+# `interact` creates UI elements that let you control the input parameters to a function. So first we'll need a function.
+
+# In[1]:
+
+
+from __future__ import print_function
+from ipywidgets import interact, interactive, fixed, interact_manual
+import ipywidgets as widgets
 
 
 # In[12]:
 
 
-get_ipython().system('jupyter notebook --generate-config')
+def f(x):
+    print(x)
 
 
-# ### Making notebooks play nice with git
+# In[13]:
+
+
+#now we'll create an interactive ui
+interact(f,x=2.);
+
+
+# In[16]:
+
+
+#interact will create a checkbox if you pass it a bool
+interact(f,x=True);
+
+
+# In[17]:
+
+
+#interact will create a text area if you pass it a string
+interact(f,x="Your text here");
+
+
+# Now these examples are cute, but let's make some pretty pictures. We turned on inline plotting earlier, so now we just need a function that accepts a parameter and draws a plot.
+
+# In[47]:
+
+
+def plotpower(a):
+    x = np.linspace(1,10,100)
+    y = x**a
+    plt.plot(x,y)
+
+
+# In[48]:
+
+
+interact(plotpower, a = 2.);
+
+
+# ## Niwidgets
+# [Niwidgets](https://github.com/janfreyberg/niwidgets) lets you interactively explore neuroimaging data in yor notebook.
+
+# In[50]:
+
+
+from niwidgets import NiftiWidget
+
+from niwidgets import examplet1
+
+test_widget = NiftiWidget(examplet1)
+test_widget.nifti_plotter()
+
+
+# In[54]:
+
+
+from niwidgets import examplezmap
+import nilearn.plotting as nip
+
+test = NiftiWidget(examplezmap)
+test.nifti_plotter(plotting_func=nip.plot_glass_brain, threshold=(0.0, 10.0, 0.01),
+                   display_mode=['ortho','xz'])
+
+
+# # Beyond Python
+# Jupyter notebooks aren't just for Python. Jupyter actually referst to JUlia PYThon and R. It's easy to install other kernels with anaconda.
+
+# In[56]:
+
+
+get_ipython().system('conda install -y -c r r-essentials')
+#rpy2 lets python and R interact with each other.
+get_ipython().system('conda install -y rpy2')
+
+
+# In[2]:
+
+
+get_ipython().magic('load_ext rpy2.ipython')
+
+
+# In[3]:
+
+
+get_ipython().magic('R require(ggplot2)')
+
+
+# In[4]:
+
+
+iris
+
+
+# You can use the `%%R` cell magic to indicate that a cell will contain R code. the magic accpets arguments, including `-i` for data passed from Python to R. Let's use ggplot to plot the iris dataset that we loaded from python
+
+# In[11]:
+
+
+get_ipython().run_cell_magic('R', '-i iris', 'ggplot(iris, aes(x = sepal_length, y = petal_width, color = species)) + geom_point() + \n    geom_smooth(method = "lm", se = F)')
+
+
+# # Making notebooks play nice with git
 # Instructions from: https://svds.com/jupyter-notebook-best-practices-for-data-science/
 # git diffs on jupyter notebooks can be a mess. If you automatically save out the .py and .html versions and track those with git as well, then you can look at the .py to evaluate changes to the code and look at the .html to evaluate changes to the outputs.
 
@@ -99,3 +467,18 @@ get_ipython().run_cell_magic('writefile', '/Users/nielsond/.jupyter/jupyter_note
 
 
 
+
+# 
+# 
+# 
+# ### Widgets
+# 
+# ### Sharing notebooks
+#   - github, Jupyter config changes
+#   - binder
+#   
+# ### Javascript slickness
+#   - RISE
+#   - 
+# 
+# ### Extensions
