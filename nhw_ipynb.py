@@ -450,6 +450,14 @@ print('Pkg.add("IJulia")')
 print('Pkg.build("IJulia")')
 
 
+# Use a writefile magic to write the output of the above cell to a file called install_ijulia.jl
+
+# In[ ]:
+
+
+
+
+
 # In[16]:
 
 
