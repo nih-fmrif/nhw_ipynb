@@ -106,6 +106,15 @@ bears = ["Yogi"
         ,"Tall"]
 
 
+# In[10]:
+
+
+bears = ["Yogi Bear"
+        ,"Pooh Bear"
+        ,"Fuzz Bear"
+        ,"Tall Bear"]
+
+
 # # Jupyter notebook extensions
 # Jupyter notebook extensions give notebooks various additional functionality, but they're not all garaunteed to be stable. You can find instructions for installing them here: https://github.com/ipython-contrib/jupyter_contrib_nbextensions
 # 
@@ -141,6 +150,13 @@ get_ipython().magic('env FOO')
 # With the `%load` magic you can load the contents of a file into a cell
 
 # In[ ]:
+
+
+# %load boring.py
+print("Not much going on here")
+
+
+# In[15]:
 
 
 # %load boring.py
@@ -429,12 +445,29 @@ def trig_plot(frequency, amplitude, fx_name= 'sin'):
 
 
 
+# In[58]:
+
+
+tp_widget = interactive(trig_plot,
+            frequency = (0.1,10.0),
+            amplitude = (0.1,10.0),
+            fx_name=['sin','cos','tan'])
+display(tp_widget)
+
+
 # Now assign the result of your interactive plot to a variable `tp_res` and the arguments to `tp_args`.
 
 # In[ ]:
 
 
 
+
+
+# In[61]:
+
+
+tp_res = tp_widget.result
+tp_args= tp_widget.args
 
 
 # ## Niwidgets
@@ -492,6 +525,12 @@ print('Pkg.build("IJulia")')
 
 
 
+
+
+# In[16]:
+
+
+get_ipython().run_cell_magic('writefile', 'install_ijulia.jl', 'ENV["JUPYTER"]="/Users/nielsond/miniconda3/envs/nhw_ipynb/bin/jupyter"\nPkg.add("IJulia")\nPkg.build("IJulia")')
 
 
 # In[17]:
