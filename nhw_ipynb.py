@@ -23,7 +23,7 @@
 # 
 # By default the notebook will display the value of variables or statements when they're alone on a line.
 
-# In[6]:
+# In[30]:
 
 
 foo = "Having fun"
@@ -32,7 +32,7 @@ foo
 
 # The notebook will pretty print some types of outputs, such as pandas dataframes.
 
-# In[1]:
+# In[31]:
 
 
 import seaborn as sns
@@ -42,14 +42,14 @@ iris.head()
 
 # With a settings change, you can also make the notebook print out any variable or statement on it's own line.
 
-# In[8]:
+# In[32]:
 
 
 from IPython.core.interactiveshell import InteractiveShell
 InteractiveShell.ast_node_interactivity = "all"
 
 
-# In[11]:
+# In[33]:
 
 
 foo
@@ -60,7 +60,7 @@ iris.head()
 # 
 # It's easy to get function documentation when you're in the jupyter notebook. Pressing `shift+tab` when your cursor is inside the parentheses of of a function will bring up the call signature of the function, and you can expand this to get the full documetation.
 
-# In[14]:
+# In[34]:
 
 
 # Press shift+tab inside the parentheses to get print's call signature and docstring 
@@ -69,13 +69,13 @@ print()
 
 # Prepending or appending a question mark on a library, method, or variable will also bring up it's docstring.
 
-# In[25]:
+# In[35]:
 
 
 get_ipython().magic('pinfo range')
 
 
-# In[28]:
+# In[36]:
 
 
 get_ipython().magic('pinfo iris.head')
@@ -84,7 +84,7 @@ get_ipython().magic('pinfo iris.head')
 # ## Executing shell commands with !
 # If you need to run a shell command you can do so right from the notebook by prepending the line with an exclamation mark.
 
-# In[29]:
+# In[37]:
 
 
 get_ipython().system('pwd')
@@ -93,7 +93,7 @@ get_ipython().system('pwd')
 # ## Multicursor and alt-select
 # You can drop a cursor at multiple points inside the same cell with `ctrl(cmd on mac)+click` or by clicking and dragging while holding alt.
 
-# In[1]:
+# In[38]:
 
 
 ###Exercise###
@@ -106,7 +106,7 @@ bears = ["Yogi"
         ,"Tall"]
 
 
-# In[ ]:
+# In[39]:
 
 
 bears = ["Yogi Bear"
@@ -121,19 +121,19 @@ bears = ["Yogi Bear"
 # ## Environtment variables: %env
 # If you need to modify the environment variables that apply to a running notebook and don't want to restart your notebook server, `%env` allows you to check and set them from within the notebook
 
-# In[3]:
+# In[40]:
 
 
 get_ipython().magic('env')
 
 
-# In[8]:
+# In[41]:
 
 
 get_ipython().magic('env FOO="Warming up"')
 
 
-# In[9]:
+# In[42]:
 
 
 get_ipython().magic('env FOO')
@@ -147,10 +147,11 @@ get_ipython().magic('env FOO')
 # In[ ]:
 
 
-get_ipython().magic('load boring.py')
+# %load boring.py
+print("Not much going on here")
 
 
-# In[ ]:
+# In[44]:
 
 
 # %load boring.py
@@ -160,7 +161,7 @@ print("Not much going on here")
 # ### Writing files: %%writefile
 # With `%%writefile` you can write the contents of a cell to a file. Let's create a simple python script that sets a python variable equal to the value of the environment variable we just created.
 
-# In[18]:
+# In[45]:
 
 
 get_ipython().run_cell_magic('writefile', './grab_foo.py', "import os\nbar = os.environ['FOO']")
@@ -169,7 +170,7 @@ get_ipython().run_cell_magic('writefile', './grab_foo.py', "import os\nbar = os.
 # ### Running files: %run
 # `%run` is a line magic that executes the file or ipython notebook passed to it.
 
-# In[19]:
+# In[46]:
 
 
 get_ipython().magic('run ./grab_foo.py')
@@ -181,7 +182,7 @@ print(bar)
 # 
 # [`%debug`](http://ipython.readthedocs.io/en/stable/interactive/magics.html#magic-debug) lets you drop into pdb after an error has been thrown even if automatic calling was off. You can also activate the debugger before executing code which allows you to set break points.
 
-# In[ ]:
+# In[47]:
 
 
 def is_moving(alive, location="south"):
@@ -197,14 +198,14 @@ def is_moving(alive, location="south"):
         
 
 
-# In[31]:
+# In[48]:
 
 
 get_ipython().magic('pdb')
 is_moving(False)
 
 
-# In[33]:
+# In[49]:
 
 
 get_ipython().magic('debug')
@@ -220,7 +221,7 @@ get_ipython().magic('debug')
 # 
 # 
 
-# In[98]:
+# In[50]:
 
 
 def slow_reverse(x):
@@ -243,26 +244,26 @@ def something_fast(n):
         b = fast_reverse(b)
 
 
-# In[99]:
+# In[51]:
 
 
 get_ipython().run_cell_magic('timeit', '', 'something_slow(100)')
 
 
-# In[100]:
+# In[52]:
 
 
 get_ipython().run_cell_magic('timeit', '', 'something_fast(100)')
 
 
-# In[101]:
+# In[53]:
 
 
 pres = get_ipython().magic('prun -r something_slow(100)')
 pres.print_stats()
 
 
-# In[102]:
+# In[54]:
 
 
 pres = get_ipython().magic('prun -r something_fast(100)')
@@ -273,7 +274,7 @@ pres.print_stats()
 # 
 # One of the really nice parts of notebooks is that you have markdown, code, and figures all in one document. the `%matplotlib inline` magic turns on plotting in the notebook.
 
-# In[29]:
+# In[55]:
 
 
 from matplotlib import pyplot as plt
@@ -282,42 +283,42 @@ import pandas as pd
 get_ipython().magic('matplotlib inline')
 
 
-# In[28]:
+# In[57]:
 
 
 for s in pd.unique(iris.species):
     x = iris.loc[iris.species == s,"sepal_length"]
     y = iris.loc[iris.species == s,"sepal_width"]
-    plt.plot(x,y,'o', label =s)
-    plt.legend(loc='best')
+    plt.plot(x,y,'o', label =s);
+    plt.legend(loc='best');
 
 
 # ## Bonus: Speaking of plotting, seaborn makes things easier and prettier
 # You can see the [seaborn documentation](https://seaborn.pydata.org/index.html) for more examples of pretty plots made easy
 
-# In[32]:
+# In[58]:
 
 
 import seaborn as sns
 sns.set()
-sns.pairplot(iris,hue="species")
+sns.pairplot(iris,hue="species");
 
 
 # # Widgets
 # 
 # [Ipython widgets](http://ipywidgets.readthedocs.io/en/stable/index.html) are python objects represented in the browser than you can use to create interactive GUIs. This can be particularly useful for exploring your data. We'll use the `interact` function to create some interactive widgets.
 # 
+# ## interact
 # `interact` creates UI elements that let you control the input parameters to a function. So first we'll need a function.
 
-# In[1]:
+# In[19]:
 
 
-from __future__ import print_function
 from ipywidgets import interact, interactive, fixed, interact_manual
 import ipywidgets as widgets
 
 
-# In[12]:
+# In[21]:
 
 
 def f(x):
@@ -345,9 +346,17 @@ interact(f,x=True);
 interact(f,x="Your text here");
 
 
+# In[25]:
+
+
+#interact will create a dropdown if you pass it a list or dict
+interact(f,x=["Option 1", "Option 2"]);
+interact(f,x={"Option 1":1, "Option 2":2});
+
+
 # Now these examples are cute, but let's make some pretty pictures. We turned on inline plotting earlier, so now we just need a function that accepts a parameter and draws a plot.
 
-# In[47]:
+# In[59]:
 
 
 def plotpower(a):
@@ -356,14 +365,50 @@ def plotpower(a):
     plt.plot(x,y)
 
 
-# In[48]:
+# In[60]:
 
 
 interact(plotpower, a = 2.);
 
 
+# ## interactive
+# What if we want to get the value of a? `interact` is a shortcut that makes and displays the widget object for you based on your inputs, `interactive` just creates and returns the widget object. You'll need to use `Ipython.display.display` to view the widget.
+
+# In[65]:
+
+
+widg_obj = interactive(plotpower, a = 2.);
+
+
+# In[66]:
+
+
+from IPython.display import display
+display(widg_obj)
+
+
+# Now that you've got a widget object the `.kwargs` property holds the interactively defined value of your inputs.
+
+# In[71]:
+
+
+widg_obj.kwargs
+
+
+# In[ ]:
+
+
+
+
+
 # ## Niwidgets
 # [Niwidgets](https://github.com/janfreyberg/niwidgets) lets you interactively explore neuroimaging data in yor notebook.
+
+# In[72]:
+
+
+get_ipython().system('pip install niwidgets')
+
 
 # In[50]:
 
