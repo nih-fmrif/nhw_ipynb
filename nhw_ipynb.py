@@ -123,15 +123,18 @@ bears = ["Yogi Bear"
 
 # In[3]:
 
+
 get_ipython().magic('env')
 
 
 # In[8]:
 
+
 get_ipython().magic('env FOO="Warming up"')
 
 
 # In[9]:
+
 
 get_ipython().magic('env FOO')
 
@@ -386,6 +389,37 @@ test.nifti_plotter(plotting_func=nip.plot_glass_brain, threshold=(0.0, 10.0, 0.0
 
 # # Beyond Python
 # Jupyter notebooks aren't just for Python. Jupyter actually referst to JUlia PYThon and R. It's easy to install other kernels with anaconda.
+
+# ## Julia
+# From [Julia's docs](https://docs.julialang.org/en/stable/manual/introduction/): "The Julia programming language... is a flexible dynamic language, appropriate for scientific and numerical computing, with performance comparable to traditional statically-typed languages."
+# 
+# To run julia in Jupyter note books, you'll first need to install julia. You can download the package for your machine from [here](https://julialang.org/downloads/). 
+
+# In[12]:
+
+
+# This will print out what you need to put ininstall_ijulia.jl
+jupyter_path = get_ipython().getoutput('which jupyter')
+print('ENV["JUPYTER"]="%s"'%jupyter_path[0])
+print('Pkg.add("IJulia")')
+print('Pkg.build("IJulia")')
+
+
+# In[16]:
+
+
+get_ipython().run_cell_magic('writefile', 'install_ijulia.jl', 'ENV["JUPYTER"]="/Users/nielsond/miniconda3/envs/nhw_ipynb/bin/jupyter"\nPkg.add("IJulia")\nPkg.build("IJulia")')
+
+
+# In[17]:
+
+
+get_ipython().system('/Applications/Julia-0.6.app/Contents/Resources/julia/bin/julia ./install_ijulia.jl')
+
+
+# Now unfortunately you'll need to restart your jupyter server for it to find the new kernels. If you're following along on jupyter hub, you won't be able to do this.
+
+# ## R
 
 # In[56]:
 
