@@ -115,6 +115,11 @@ bears = ["Yogi Bear"
         ,"Tall Bear"]
 
 
+# # Jupyter notebook extensions
+# Jupyter notebook extensions give notebooks various additional functionality, but they're not all garaunteed to be stable. You can find instructions for installing them here: https://github.com/ipython-contrib/jupyter_contrib_nbextensions
+# 
+# 
+
 # # IPython Magic
 # If you are running your notebook with an python kernel, there are some special built in funcitonality that you can access with "magic" functions. There are line magics that are preceded by a single `%` and affect only that line and cell magics preceded by `%%` that you place at the beginning of a cell to modify the behavior of that cell. There are [lots of magics](http://ipython.readthedocs.io/en/stable/interactive/magics.htm), but here are some handy ones.
 
