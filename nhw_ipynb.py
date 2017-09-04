@@ -93,7 +93,7 @@ get_ipython().system('pwd')
 # ## Multicursor and alt-select
 # You can drop a cursor at multiple points inside the same cell with `ctrl(cmd on mac)+click` or by clicking and dragging while holding alt.
 
-# In[38]:
+# In[ ]:
 
 
 ###Exercise###
@@ -104,6 +104,15 @@ bears = ["Yogi"
         ,"Pooh"
         ,"Fuzz"
         ,"Tall"]
+
+
+# In[1]:
+
+
+bears = ["Yogi Bear"
+        ,"Pooh Bear"
+        ,"Fuzz Bear"
+        ,"Tall Bear"]
 
 
 # In[39]:
