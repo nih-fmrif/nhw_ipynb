@@ -204,6 +204,13 @@ get_ipython().magic('pdb')
 is_moving(False)
 
 
+# In[73]:
+
+
+# Turn autopdb back off
+get_ipython().magic('pdb')
+
+
 # In[49]:
 
 
