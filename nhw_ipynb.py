@@ -147,8 +147,7 @@ get_ipython().magic('env FOO')
 # In[ ]:
 
 
-# %load boring.py
-print("Not much going on here")
+get_ipython().magic('load boring.py')
 
 
 # In[44]:
@@ -393,12 +392,6 @@ display(widg_obj)
 
 
 widg_obj.kwargs
-
-
-# In[ ]:
-
-
-
 
 
 # ## Niwidgets
